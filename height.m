@@ -71,7 +71,7 @@ for lat=24.788134: 0.000009:24.788494
             if (flag == 1) && (e > threshold)
                 count = count + 1 ;
                 base = base+1;
-            else
+            elseif(flag == 1) && (e < threshold)
                 base = base+1;
             end
             A=lat;
