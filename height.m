@@ -1,6 +1,6 @@
 viewer = siteviewer("Buildings","nycu.osm","Basemap","topographic");
 
-fileID = fopen('nycu5.txt','w');
+fileID = fopen('nycu6.txt','w');
 
 lat_uav = 24.788314;
 long_uav = 121.000162;
@@ -63,6 +63,7 @@ for lat=24.788134: 0.000009:24.788494
                 %raytrace(tx,rxs,rtpm)
                 ss = sigstrength(rxs,tx,rtpm);
                 e = power(10,ss/10);
+                r = sinr(rxs,tx);
             %建築區標是為1
             else
                 ss = 1;
@@ -82,6 +83,7 @@ for lat=24.788134: 0.000009:24.788494
             fprintf(fileID,'%12.8f\t',B);
             fprintf(fileID,'%12.8f\t',C);
             fprintf(fileID,'%12.8f\t',D);
+            fprintf(fileID,'sinr = %12.8f\t',r);
             fprintf(fileID,'count = %12.8f\t',count);
             fprintf(fileID,'base = %12.8f\t',base);
             fprintf(fileID,'percent = %12.8f\t',count/base);
