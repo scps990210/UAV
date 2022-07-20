@@ -1,14 +1,14 @@
 viewer = siteviewer("Buildings","nycu.osm","Basemap","topographic");
 
-fileID = fopen('nycu6.txt','w');
-
-lat_uav = 24.788314;
-long_uav = 121.000162;
-alt = 85;
+fileID = fopen('nycu7.txt','w');
+for k = 100 : 100 : 1500
+    lat_uav = 24.787142;
+long_uav = 120.996546;
+alt = 135;
 flag = 1;
 count = 0;
 base = 0;
-threshold = 0.00000530;
+threshold = 25;
 
 fq = 4.5e9;
 y = design(yagiUda,fq);
@@ -18,8 +18,8 @@ y.TiltAxis = 'y';
 tx = txsite("Name","Small cell transmitter", ...
     "Latitude",lat_uav, ...
     "Longitude",long_uav, ...
-    "AntennaHeight",40, ...
-    "TransmitterPower",0.25, ...
+    "AntennaHeight",k, ...
+    "TransmitterPower",0.1, ...
     "TransmitterFrequency",fq);
 %show(tx)
 rtpm = propagationModel("raytracing", ...
@@ -32,10 +32,10 @@ rtpm = propagationModel("raytracing", ...
 %    "Resolution",3, ...
 %    "Transparency",0.6)
 
-for lat=24.788134: 0.000009:24.788494
-    for lon=120.999982:0.000009:121.000342
+for lat=24.779942:0.000090:24.794342
+    for lon=120.989346:0.000090:121.003746
         dis = power(lat-lat_uav,2)+power(lon-long_uav,2);
-        if  dis > 3.24e-8
+        if  dis > 0.00005184
             flag = 0;
         else 
             flag = 1;
@@ -68,10 +68,10 @@ for lat=24.788134: 0.000009:24.788494
             else
                 ss = 1;
             end
-            if (flag == 1) && (e > threshold)
+            if (flag == 1) && (r > threshold)
                 count = count + 1 ;
                 base = base+1;
-            elseif(flag == 1) && (e < threshold)
+            elseif(flag == 1) && (r < threshold)
                 base = base+1;
             end
             A=lat;
@@ -90,4 +90,6 @@ for lat=24.788134: 0.000009:24.788494
             fprintf(fileID,'sigstrength = %12.8f\n',E);
     end
 end
+end
+
 fclose(fileID);
