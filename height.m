@@ -1,7 +1,8 @@
 viewer = siteviewer("Buildings","nycu.osm","Basemap","topographic");
 
-fileID = fopen('nycu7.txt','w');
+fileID = fopen('nycu11.txt','w');
 for k = 100 : 100 : 1500
+    fprintf(fileID,'Antenna height = %12.8f\n',k);
     lat_uav = 24.787142;
 long_uav = 120.996546;
 alt = 135;
@@ -32,8 +33,8 @@ rtpm = propagationModel("raytracing", ...
 %    "Resolution",3, ...
 %    "Transparency",0.6)
 
-for lat=24.779942:0.000090:24.794342
-    for lon=120.989346:0.000090:121.003746
+for lat=24.779942:0.000450:24.794342
+    for lon=120.989346:0.000450:121.003746
         dis = power(lat-lat_uav,2)+power(lon-long_uav,2);
         if  dis > 0.00005184
             flag = 0;
